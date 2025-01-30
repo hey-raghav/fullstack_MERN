@@ -16,6 +16,7 @@
   flex: 1;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 .leftcontainer img{
@@ -24,10 +25,19 @@
   border-radius: 12px;
 }
 
+.leftcontainer p{
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: black;
+  font-weight: bold;
+}
+
 .rightcontainer{
   background-image: linear-gradient(#e9defa,#fbfcdb);
   display: flex;
   flex: 1;
+  align-items: center;
+  justify-content: center;
 }
 
 .header{
@@ -45,4 +55,33 @@
   width: 4%;
   height: 4%;
   margin-right: 12px;
+}
+
+.formcard {
+  background-color: white;
+  height: 60%;
+  width: 60%;
+  border-radius: 12px;
+  box-shadow: 4px 4px 24px 0px black;
+  padding: 12px;
+
+
+}
+
+.formcard div{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+
+}
+
+.formcard input{
+  margin-top: 8px;
+  width: 100%;
+  height: 24px;
+  padding-left: 8px;
+}
+
+.formcard label{
+  
 }
