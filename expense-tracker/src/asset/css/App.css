@@ -3,6 +3,11 @@
   padding: 0;
 }
 
+html,
+body{
+  overflow: hidden;
+}
+
 .container{
   background-color: aqua;
   height: 100dvh;

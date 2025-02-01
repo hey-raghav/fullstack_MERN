@@ -2,7 +2,7 @@ import React from 'react'
 
 function Register() {
   return (
-    <div>
+    <div className='maincontainer'>
          <div className='formcard'>
                     <div>
                     <h2 style={{alignSelf:'center'}}>Register</h2>
