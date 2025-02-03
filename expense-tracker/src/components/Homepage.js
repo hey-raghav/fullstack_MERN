@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import img1 from '../asset/img/dashboard.jpeg'
 import { Link, useNavigate } from 'react-router-dom'
 function Homepage() {
 
     const navigate = useNavigate();
+    const [email, setEmail] = useState();
+    const [pass, setPass] = useState();
 
-    const doLogin=()=>{
-        console.log("clicked");
-        navigate("/dashboard");
+    const doLogin = () => {
+        console.log("clicked", email, pass);
+        //navigate("/dashboard");
     }
     return (
         <div className='container'>
@@ -18,34 +20,40 @@ function Homepage() {
 
             </div>
             <div className='rightcontainer'>
-               <div className='formcard'>
-               <div>
-                    <h2 style={{alignSelf:'center'}}>Login</h2>
+                <div className='formcard'>
+                    <div>
+                        <h2 style={{ alignSelf: 'center' }}>Login</h2>
                     </div>
                     <div>
                         <label>
                             Email
                         </label>
-                        <input type="email"
-                            placeholder='Enter your email' />
+                        <input required type="email"
+                            placeholder='Enter your email'
+                            value={email}
+                            onChange={e => setEmail(e.value)}
+                        />
                     </div>
                     <div>
                         <label>
                             Password
                         </label>
-                        <input type="password"
-                            placeholder='Enter your password' />
+                        <input required type="password"
+                            placeholder='Enter your password'
+                            value={pass}
+                            onChange={e => setPass(e.value)}
+                        />
                     </div>
                     <div>
                         <button onClick={doLogin}>Login</button>
                     </div>
                     <div>
-                        <span style={{alignSelf:'center'}}>
-                            Not a user? <Link to= "/register">Register</Link>
+                        <span style={{ alignSelf: 'center' }}>
+                            Not a user? <Link to="/register">Register</Link>
                         </span>
                     </div>
 
-               </div>
+                </div>
             </div>
 
         </div>
