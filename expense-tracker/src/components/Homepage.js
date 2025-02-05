@@ -1,15 +1,27 @@
 import React, { useState } from 'react'
 import img1 from '../asset/img/dashboard.jpeg'
 import { Link, useNavigate } from 'react-router-dom'
-function Homepage() {
+function Dashboard() {
 
     const navigate = useNavigate();
-    const [email, setEmail] = useState();
-    const [pass, setPass] = useState();
+    const [inputs, setInputs] = useState({})
+    const [showerror, setShowError] = useState(false)
+    const handleChange = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setInputs(values => ({ ...values, [name]: value }))
+    }
 
-    const doLogin = () => {
-        console.log("clicked", email, pass);
-        //navigate("/dashboard");
+    const doLogin = (event) => {
+        event.preventDefault();
+        console.log("clicked", inputs);
+        if (inputs.pass.length >= 8) {
+            navigate("/dashboard");
+        }
+        else {
+            setShowError(true);
+        }
+
     }
     return (
         <div className='container'>
@@ -24,34 +36,47 @@ function Homepage() {
                     <div>
                         <h2 style={{ alignSelf: 'center' }}>Login</h2>
                     </div>
-                    <div>
-                        <label>
-                            Email
-                        </label>
-                        <input required type="email"
-                            placeholder='Enter your email'
-                            value={email}
-                            onChange={e => setEmail(e.value)}
-                        />
-                    </div>
-                    <div>
-                        <label>
-                            Password
-                        </label>
-                        <input required type="password"
-                            placeholder='Enter your password'
-                            value={pass}
-                            onChange={e => setPass(e.value)}
-                        />
-                    </div>
-                    <div>
-                        <button onClick={doLogin}>Login</button>
-                    </div>
-                    <div>
-                        <span style={{ alignSelf: 'center' }}>
-                            Not a user? <Link to="/register">Register</Link>
-                        </span>
-                    </div>
+                    <form onSubmit={doLogin}>
+                        <div>
+                            <label>
+                                Email
+                            </label>
+                            <input required
+                                type="email"
+                                placeholder='Enter your email'
+                                value={inputs.email || ''}
+                                onChange={handleChange}
+                                name='email'
+                            />
+                        </div>
+                        <div>
+                            <label>
+                                Password
+                            </label>
+                            <input required
+                                type="password"
+                                placeholder='Enter your password'
+                                value={inputs.pass || ''}
+                                onChange={handleChange}
+                                name='pass'
+                            />
+                        </div>
+                        {
+                            showerror ?
+                                <div>
+                                    <span style={{ color: 'red', alignSelf: 'center' }}>Password Length Must be greater than 8</span>
+                                </div> : null
+                        }
+
+                        <div>
+                            <button>Login</button>
+                        </div>
+                        <div>
+                            <span style={{ alignSelf: 'center' }}>
+                                Not a user? <Link to="/register">Register</Link>
+                            </span>
+                        </div>
+                    </form>
 
                 </div>
             </div>
@@ -60,4 +85,4 @@ function Homepage() {
     )
 }
 
-export default Homepage
+export default Dashboard
