@@ -1,88 +1,112 @@
 import React, { useState } from 'react'
 import img from '../asset/img/image.jpeg'
 import { Link, useNavigate } from 'react-router-dom'
-function Homepage() {
+function Dashboard() {
+    const myExpenses = [100,200,300,400,500,600];
 
     const navigate = useNavigate();
     const [inputs, setInputs] = useState({})
-    const [showerror, setShowError] = useState(false)
+    const [showdata, setShowData] = useState(false)
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
         setInputs(values => ({ ...values, [name]: value }))
     }
 
-    const doLogin = (event) => {
+    const addExpense = (event) => {
         event.preventDefault();
         console.log("clicked", inputs);
-        if (inputs.pass.length >= 8) {
-            navigate("/dashboard");
-        }
-        else {
-            setShowError(true);
-        }
+        setShowData(true)
 
     }
+
+
     return (
         <div className='container'>
-            <div className='leftcontainer'>
-                <p>Please add your Expenses</p>
-                <img src={img} />
-
-            </div>
+            {showdata ?
+                <div className='leftcontainer'>
+                    <p>Total Expenses: 1000</p>
+                    {myExpenses.map((val) => 
+                    <div className='expenseCard'>
+                        <p>Title</p>
+                        <p>Amount : {val}</p>
+                        <p>Date</p>
+                        <p>Type</p>
+                    </div>
+                    )}
+                </div>
+                :
+                <div className='leftcontainer'>
+                    <p>Please add your Expenses</p>
+                    <img src={img} />
+                </div>
+            }
             <div className='rightcontainer'>
                 <div className='formcard'>
                     <div>
                         <h2 style={{ alignSelf: 'center' }}>Add Expense</h2>
                     </div>
-                    <form onSubmit={doLogin}>
+                    <form onSubmit={addExpense}>
                         <div>
                             <label>
-                                Email
+                                Title
                             </label>
                             <input required
-                                type="email"
-                                placeholder='Enter your email'
-                                value={inputs.email || ''}
+                                type="text"
+                                placeholder='Enter your Expense title'
+                                value={inputs.title || ''}
                                 onChange={handleChange}
-                                name='email'
+                                name='title'
                             />
                         </div>
                         <div>
                             <label>
-                                Password
+                                Amount
                             </label>
                             <input required
-                                type="password"
-                                placeholder='Enter your password'
-                                value={inputs.pass || ''}
+                                type="number"
+                                placeholder='Enter your Expense amount'
+                                value={inputs.expense || ''}
                                 onChange={handleChange}
-                                name='pass'
+                                name='expense'
                             />
                         </div>
-                        {
-                            showerror ?
-
-                                <div>
-                                    <span style={{ color: 'red', alignSelf: 'center' }}>Password Length Must be greater than 8</span>
-                                </div> : null
-                        }
+                        <div>
+                            <label>
+                                Type
+                            </label>
+                            <select
+                                value={inputs.type || ''}
+                                onChange={handleChange}
+                                name='type'
+                            >
+                                <option value="card">Card</option>
+                                <option value="cash">Cash</option>
+                                <option value="upi">Upi</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>
+                                Date
+                            </label>
+                            <input required
+                                type="date"
+                                placeholder='Enter Date'
+                                value={inputs.date || ''}
+                                onChange={handleChange}
+                                name='date'
+                            />
+                        </div>
 
                         <div>
                             <button>Add</button>
-                        </div>
-                        <div>
-                            <span style={{ alignSelf: 'center' }}>
-                                Not a user? <Link to="/register">Register</Link>
-                            </span>
                         </div>
                     </form>
 
                 </div>
             </div>
-
         </div>
     )
 }
 
-export default Homepage
+export default Dashboard
