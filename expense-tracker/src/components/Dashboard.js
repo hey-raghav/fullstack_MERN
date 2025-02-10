@@ -50,6 +50,7 @@ function Dashboard() {
                     <img src={img} />
                 </div>
             }
+            
             <div className='rightcontainer'>
                 <div className='formcard'>
                     <div>
