@@ -6,6 +6,9 @@ import { useNavigate, useLocation } from 'react-router-dom'
 function Header() {
   const navigate = useNavigate();
   const location = useLocation();
+  const doLogout =()=>{
+    navigate('/')
+  }
   console.log("MSG", location.pathname);
   return (
     <div className='header'>
@@ -22,7 +25,7 @@ function Header() {
               <img style={{ width: '10px', height: '10px', marginLeft: '10px', alignItems: 'center' }} src={arrow} />
               <div class="dropdown-content">
                 <p>Change Password</p>
-                <p>Logout</p>
+                <p onClick={doLogout}>Logout</p>
               </div>
             </div>
             {/* <p>User Name</p>

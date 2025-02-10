@@ -4,7 +4,7 @@ import del from '../asset/img/bin.jpeg'
 import edit from '../asset/img/edit.jpeg'
 import { Link, useNavigate } from 'react-router-dom'
 function Dashboard() {
-    const myExpenses = [100,200,300,400,500,600];
+    const myExpenses = [100, 200, 300, 400, 500, 600];
 
     const navigate = useNavigate();
     const [inputs, setInputs] = useState({})
@@ -14,6 +14,7 @@ function Dashboard() {
         const value = event.target.value;
         setInputs(values => ({ ...values, [name]: value }))
     }
+    var modal = document.getElementById("myModal");
 
     const addExpense = (event) => {
         event.preventDefault();
@@ -21,27 +22,38 @@ function Dashboard() {
         setShowData(true)
 
     }
-
-
+    const deleteExpense=()=>{
+        modal.style.display = "none";
+    }
     return (
         <div className='container'>
             {showdata ?
                 <div className='leftcontainer'>
                     <p>Total Expenses: 1000</p>
-                    <div style={{backgroundImage: 'linear-gradient(#e9defa, #fbfcdb)',width:'100%',overflowY:'scroll',marginBottom:'80px',justifyContent:'center',justifyItems:'center',padding:'20px'}}>
-                    {myExpenses.map((val) => 
-                    <div className='expenseCard'>
-                        <div style={{width:'100%', display:'flex' ,flexDirection:'row',justifyContent:'flex-end'}}>
-                        <img style={{width:'20px',height:'20px'}} src={edit} />
-                        <img style={{width:'20px',height:'20px',marginLeft:"4px"}} src={del} />
+
+                    <div id="myModal" className="modal">
+                        <div className="modal-content">
+                            <p>Do you want to delete this expense?</p>
+                            <button onClick={deleteExpense}>Yes</button>
+                            <button onClick={()=>{modal.style.display = "none"}}>No</button>
                         </div>
-                        <p>Title</p>
-                        <p>Amount : {val}</p>
-                        <p>Date</p>
-                        <p>Type</p>
-                        
                     </div>
-                    )}
+                    
+
+                    <div style={{ backgroundImage: 'linear-gradient(#e9defa, #fbfcdb)', width: '100%', overflowY: 'scroll', marginBottom: '80px', justifyContent: 'center', justifyItems: 'center', padding: '20px' }}>
+                        {myExpenses.map((val) =>
+                            <div className='expenseCard'>
+                                <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'flex-end',alignContent:'center',alignItems:'center' }}>
+                                    <img style={{ width: '20px', height: '20px' }} src={edit} />
+                                    <img onClick={()=>{modal.style.display = "block"}} style={{ width: '20px', height: '20px', marginLeft: "4px" }} src={del} />
+                                </div>
+                                <p>Title</p>
+                                <p>Amount : {val}</p>
+                                <p>Date</p>
+                                <p>Type</p>
+
+                            </div>
+                        )}
                     </div>
                 </div>
                 :
@@ -50,7 +62,6 @@ function Dashboard() {
                     <img src={img} />
                 </div>
             }
-            
             <div className='rightcontainer'>
                 <div className='formcard'>
                     <div>
@@ -89,7 +100,10 @@ function Dashboard() {
                                 value={inputs.type || ''}
                                 onChange={handleChange}
                                 name='type'
+                                required
+                                defaultValue= {"1"}
                             >
+                                <option disabled value = "1">Please Select Payment Type</option>
                                 <option value="card">Card</option>
                                 <option value="cash">Cash</option>
                                 <option value="upi">Upi</option>
