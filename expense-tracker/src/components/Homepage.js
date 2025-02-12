@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import img1 from '../asset/img/dashboard.jpeg'
 import { Link, useNavigate } from 'react-router-dom'
-function Dashboard() {
+function Homepage() {
 
     const navigate = useNavigate();
     const [inputs, setInputs] = useState({})
@@ -12,16 +12,17 @@ function Dashboard() {
         setInputs(values => ({ ...values, [name]: value }))
     }
 
+
     const doLogin = (event) => {
         event.preventDefault();
-        console.log("clicked", inputs);
+        console.log("Clicked", inputs);
+
         if (inputs.pass.length >= 8) {
             navigate("/dashboard");
         }
         else {
             setShowError(true);
         }
-
     }
     return (
         <div className='container'>
@@ -41,48 +42,55 @@ function Dashboard() {
                             <label>
                                 Email
                             </label>
-                            <input required
+                            <input
+                                required
                                 type="email"
                                 placeholder='Enter your email'
                                 value={inputs.email || ''}
                                 onChange={handleChange}
                                 name='email'
+
                             />
                         </div>
                         <div>
                             <label>
                                 Password
                             </label>
-                            <input required
+                            <input
+                                required
                                 type="password"
-                                placeholder='Enter your password'
+                                placeholder='Enter your Password'
                                 value={inputs.pass || ''}
                                 onChange={handleChange}
                                 name='pass'
+
                             />
                         </div>
                         {
                             showerror ?
                                 <div>
-                                    <span style={{ color: 'red', alignSelf: 'center' }}>Password Length Must be greater than 8</span>
+                                    <span style={{ color: 'red', alignSelf: 'center' }}>Password length must be greater then 8</span>
                                 </div> : null
                         }
 
                         <div>
                             <button>Login</button>
                         </div>
-                        <div>
-                            <span style={{ alignSelf: 'center' }}>
-                                Not a user? <Link to="/register">Register</Link>
-                            </span>
-                        </div>
-                    </form>
 
+
+                    </form>
+                    <div>
+                        <button onClick={() => { alert("Email Sent") }} style={{ backgroundColor: 'white', color: 'black', border: '2px solid black' }}>Forgot Password</button>
+                    </div>
+                    <div>
+                        <span style={{ alignSelf: 'center' }}>Not a user ?<Link to="/register">Register</Link> </span>
+                    </div>
                 </div>
+
             </div>
 
         </div>
     )
 }
 
-export default Dashboard
+export default Homepage
