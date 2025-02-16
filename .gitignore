@@ -1,0 +1,25 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+#backend
+backend/node_modules
+backend/.env
+# dependencies
+expense-tracker/node_modules
+expense-tracker/.pnp
+expense-tracker/.pnp.js
+
+# testing
+expense_tracker/coverage
+
+# production
+expense_tracker/build
+
+# misc
+expense-tracker/.DS_Store
+expense-tracker/.env.local
+expense-tracker/.env.development.local
+expense-tracker/.env.test.local
+expense-tracker/.env.production.local
+
+expense-tracker/npm-debug.log*
+expense
