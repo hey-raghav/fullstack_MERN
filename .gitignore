@@ -9,10 +9,10 @@ expense-tracker/.pnp
 expense-tracker/.pnp.js
 
 # testing
-expense_tracker/coverage
+expense-tracker/coverage
 
 # production
-expense_tracker/build
+expense-tracker/build
 
 # misc
 expense-tracker/.DS_Store
