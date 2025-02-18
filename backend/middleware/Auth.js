@@ -14,5 +14,4 @@ const checkToken = (req, res, next) => {
             .json({ message: 'JWT token is wrong or expired' });
     }
 }
-
 module.exports = checkToken;
