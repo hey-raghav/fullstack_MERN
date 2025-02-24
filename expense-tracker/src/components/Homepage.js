@@ -12,17 +12,35 @@ function Homepage() {
         setInputs(values => ({ ...values, [name]: value }))
     }
 
+    
 
-    const doLogin = (event) => {
+    const doLogin = async(event) => {
         event.preventDefault();
         console.log("Clicked", inputs);
+        var paramsjson = {
+            email:inputs.email,
+            password:inputs.pass
+        }
+        var params = JSON.stringify(paramsjson);
+        await fetch("http://localhost:5000/auth/login",
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json",
+                },
+                body:params
+            }
+        ).then((data)=>{
+            console.log("Data ",data.status,data.Response);
+            if (data.status==200) {
+                navigate("/dashboard");
+            }
+            else {
+                setShowError(true);
+            }
+        })
 
-        if (inputs.pass.length >= 8) {
-            navigate("/dashboard");
-        }
-        else {
-            setShowError(true);
-        }
+        
     }
     return (
         <div className='container'>
@@ -69,7 +87,7 @@ function Homepage() {
                         {
                             showerror ?
                                 <div>
-                                    <span style={{ color: 'red', alignSelf: 'center' }}>Password length must be greater then 8</span>
+                                    <span style={{ color: 'red', alignSelf: 'center' }}>Invalid credentials</span>
                                 </div> : null
                         }
 

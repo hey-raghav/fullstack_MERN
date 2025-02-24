@@ -9,10 +9,24 @@ function Register() {
             const value = event.target.value;
             setInputs(values => ({ ...values, [name]: value }))
         }
-        const doRegister = (event) => {
+        const doRegister = async(event) => {
             event.preventDefault();
             console.log("Clicked", inputs);
-            navigate("/dashboard");
+            var paramsjson = {
+                name:inputs.name,
+                email:inputs.pass,
+                password:inputs.pass
+            }
+            var params = JSON.stringify(paramsjson);
+            await fetch("http://localhost:5000/auth/signup",
+                {
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"application/json",
+                    },
+                    body:params
+                }
+            )
         }
     return (
         <div className='mainContainer'>
