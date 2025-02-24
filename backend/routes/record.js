@@ -6,6 +6,6 @@ router.get('/get', checkToken, find);
 router.post('/add', checkToken, insert);
 router.put('/update', checkToken, modify);
 router.delete('/remove', checkToken, del);
-router.put('/reset',checkToken, reset);
+router.patch('/reset',checkToken, reset);
 
 module.exports = router;

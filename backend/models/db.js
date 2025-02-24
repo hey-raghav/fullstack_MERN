@@ -4,5 +4,5 @@ mongoose.connect(mongo_url)
     .then(() => {
         console.log('Database Connected');
     }).catch((err) => {
-        console.log('Error CConnecting to DB ', err);
+        console.log('Error Connecting to DB ', err);
     })

@@ -5,36 +5,50 @@ var nodemailer = require('nodemailer');
 
 
 
-const forget = async(req, res) => {
+const forget = async (req, res) => {
     try {
-        const {password,email} = req.body;
+        const { password, email } = req.body;
         const pass = await bcrypt.hash(password, 10);
-        await UserModel.findOneAndUpdate({email:email},{password:pass})
-        res.status(205).json({
-            message:"Your Password Has been reset please login",
-            success:true
-        })
+        await UserModel.findOneAndUpdate({ email: email }, { password: pass }).then(() => {
+            console.log('Password Updated')
+            res.status(200).json({
+                message: "Your password has been reset. Please login",
+                success: true
+            })
+        }
+        )
+            .catch((err) => {
+                console.log(err)
+                res.status(500).json({
+                    message: "Internal Server Error",
+                    success: false
+                })
+            });
+
     }
+
     catch {
         res.status(500)
             .json({
                 message: "Internal Server Error",
                 success: false
             })
-    }
 
+    }
 }
 
-const sendEmail = async(req, res) => {
+const sendEmail = async (req, res) => {
     try {
         const { email } = req.body;
-
         const user = await UserModel.findOne({ email });
-        console.log("user ", user);
         if (!user) {
             return res.status(404)
-                .json({ message: 'User does not exist, please signup', success: false });
+                .json({
+                    message: 'User does not exist.Please Signup',
+                    success: false
+                });
         }
+
 
         var transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -43,7 +57,6 @@ const sendEmail = async(req, res) => {
                 pass: process.env.Pass
             }
         });
-
         var otp = Math.floor(100000 + Math.random() * 900000);
         var msg = "OTP to reset your password is " + otp.toString();
         console.log("Email ", msg, email);
@@ -65,9 +78,8 @@ const sendEmail = async(req, res) => {
                 console.log('Email sent: ' + info.response);
                 res.status(200).json({
                     message: "Email Sent",
-                    otp:otp,
+                    otp: otp,
                     success: true
-
                 })
             }
         });
@@ -78,8 +90,10 @@ const sendEmail = async(req, res) => {
                 message: "Internal Server Error",
                 success: false
             })
+
     }
 }
+
 
 const signup = async (req, res) => {
     try {
@@ -87,15 +101,18 @@ const signup = async (req, res) => {
         const user = await UserModel.findOne({ email });
         if (user) {
             return res.status(409)
-                .json({ message: 'User already exists, you can login', success: false });
+                .json({
+                    message: 'User already exist',
+                    success: false
+                });
         }
         const userModel = new UserModel({ name, email, password });
         userModel.password = await bcrypt.hash(password, 10);
-        console.log("SIGNUP data ", userModel)
+
         await userModel.save();
         res.status(201)
             .json({
-                message: "Signup Successfully",
+                message: "Signup successfully",
                 success: true
             })
     }
@@ -105,33 +122,38 @@ const signup = async (req, res) => {
                 message: "Internal Server Error",
                 success: false
             })
+
     }
 }
-
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await UserModel.findOne({ email });
-        console.log("user ", user);
+        console.log("User ", user);
         if (!user) {
             return res.status(404)
-                .json({ message: 'User does not exist, please signup', success: false });
+                .json({
+                    message: 'User does not exist.Please Signup',
+                    success: false
+                });
         }
-
 
 
         const pass = await bcrypt.compare(password, user.password);
-        console.log("pass ", pass);
+        console.log("psw ", pass);
         if (pass == false) {
             return res.status(403)
-                .json({ message: 'invalid credentials', success: false });
-        }
+                .json({
+                    message: 'Invalid credentials',
+                    success: false
+                });
 
+        }
         const token = jwt.sign({ email: email, name: user.name }, process.env.JWT_KEY, { expiresIn: '24h' })
 
         res.status(200)
             .json({
-                message: "Login Successful",
+                message: "Login successful",
                 success: true,
                 name: user.name,
                 email: user.email,
@@ -144,9 +166,11 @@ const login = async (req, res) => {
                 message: "Internal Server Error",
                 success: false
             })
+
     }
 }
 
 module.exports = {
     signup, login, forget, sendEmail
+
 }
