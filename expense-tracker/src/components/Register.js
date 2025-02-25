@@ -14,7 +14,7 @@ function Register() {
             console.log("Clicked", inputs);
             var paramsjson = {
                 name:inputs.name,
-                email:inputs.pass,
+                email:inputs.email,
                 password:inputs.pass
             }
             var params = JSON.stringify(paramsjson);
