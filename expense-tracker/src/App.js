@@ -5,16 +5,22 @@ import './asset/css/App.css';
 import Homepage from './components/Homepage';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
-
+import ProtectedRoute from './routes/Protected';
+import UnProtectedRoute from './routes/Unprotected';
 function App() {
   return (
     <div>
       <Routes>
-        <Route path ="/" element={<Homepage/>} />
-        <Route path ="/register" element={<Register/>} />
-        <Route path ="/dashboard" element={<Dashboard/>} />
-        <Route path ="/" element={<Register/>} />
-      
+        <Route element={<UnProtectedRoute />}>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
+
+
+
       </Routes>
     </div>
   );
